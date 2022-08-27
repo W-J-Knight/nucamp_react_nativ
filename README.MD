@@ -1,6 +1,7 @@
-# Nucampsite ![Project Image](./imagesREADME/logo.png)  
+# Nucampsite ![Project Image](./assets/images/logo.png)  
 
-![Project Image](./imagesREADME/WeekOne.png | width=1400)
+![Project Image](assets/images/WeekOne.png | width=1400)
+<img src="assets/images/WeekOne.png " width="100">
 
 > This is a ReadMe template to help save you time and effort.
 

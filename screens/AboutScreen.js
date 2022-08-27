@@ -6,7 +6,7 @@ import { Avatar, ListItem } from 'react-native-elements';
 
 const Mission = () => {
     return (
-        <Card wrapperStyle={{ margin: 10 }}>
+        <Card >
             <Card.Title>Our Mission</Card.Title>
             <Card.Divider />
             <Text style={{ margin: 10 }}>

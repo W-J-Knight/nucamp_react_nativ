@@ -7,6 +7,7 @@ import {
     Switch,
     Button,
     Modal,
+    Alert,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -17,7 +18,7 @@ const ReservationScreen = () => {
     const [hikeIn, setHikeIn] = useState(false);
     const [date, setDate] = useState(new Date());
     const [showCalendar, setShowCalendar] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    // const [showModal, setShowModal] = useState(false);
 
     const onDateChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -29,7 +30,7 @@ const ReservationScreen = () => {
         console.log("campers:", campers);
         console.log("hikeIn:", hikeIn);
         console.log("date:", date);
-        setShowModal(!showModal);
+        // setShowModal(!showModal);
     };
 
     const resetForm = () => {
@@ -90,13 +91,32 @@ const ReservationScreen = () => {
                 )}
                 <View style={styles.formRow}>
                     <Button
-                        onPress={() => handleReservation()}
+                        // onPress={() => handleReservation()}
+                        onPress={() =>
+                            Alert.alert(
+                                'Begin Search?',
+                                'Number of Campers: ',
+                                "Hike-In? " ,                            
+                                [
+                                    {
+                                        text: 'Cancel',
+                                        onPress: () =>{},
+                                        style: 'cancel'
+                                    },
+                                    {
+                                        text: 'OK',
+                                        onPress: () =>{},
+                                    }
+                                ],
+                                { cancelable: false }
+                            )
+                        }
                         title="Search Availability"
                         color="#5637DD"
                         accessibilityLabel="Tap me to search for available campsites to reserve"
                     />
                 </View>
-                <Modal
+                {/* <Modal
                     animationType="slide"
                     transparent={false}
                     visible={showModal}
@@ -124,7 +144,7 @@ const ReservationScreen = () => {
                             title="Close"
                         />
                     </View>
-                </Modal>
+                </Modal> */}
             </Animatable.View>
         </ScrollView>
     );

@@ -6,8 +6,8 @@ import {
     StyleSheet,
     Switch,
     Button,
-    Modal,
     Alert,
+    TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -18,7 +18,6 @@ const ReservationScreen = () => {
     const [hikeIn, setHikeIn] = useState(false);
     const [date, setDate] = useState(new Date());
     const [showCalendar, setShowCalendar] = useState(false);
-    // const [showModal, setShowModal] = useState(false);
 
     const onDateChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -27,10 +26,34 @@ const ReservationScreen = () => {
     };
 
     const handleReservation = () => {
+        // make multi-line message for the alert
+        // to date to string https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+        const msg = `Number of Campers: ${campers}\nHike-In? ${hikeIn}\nDate: ${date.toLocaleDateString(
+            "en-US"
+        )}`;
+        Alert.alert(
+            "Begin Search?",
+            msg,
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => {
+                        resetForm();
+                    },
+                    style: "cancel",
+                },
+                {
+                    text: "OK",
+                    onPress: () => {
+                        resetForm();
+                    },
+                },
+            ],
+            { cancelable: false }
+        );
         console.log("campers:", campers);
         console.log("hikeIn:", hikeIn);
         console.log("date:", date);
-        // setShowModal(!showModal);
     };
 
     const resetForm = () => {
@@ -42,11 +65,7 @@ const ReservationScreen = () => {
 
     return (
         <ScrollView>
-            <Animatable.View
-                animation="zoomIn"
-                duration={2000}
-                delay={1000}
-            >
+            <Animatable.View animation="zoomIn" duration={200} delay={100}>
                 <View style={styles.formRow}>
                     <Text style={styles.formLabel}>Number of Campers:</Text>
                     <Picker
@@ -91,60 +110,12 @@ const ReservationScreen = () => {
                 )}
                 <View style={styles.formRow}>
                     <Button
-                        // onPress={() => handleReservation()}
-                        onPress={() =>
-                            Alert.alert(
-                                'Begin Search?',
-                                'Number of Campers: ',
-                                "Hike-In? " ,                            
-                                [
-                                    {
-                                        text: 'Cancel',
-                                        onPress: () =>{},
-                                        style: 'cancel'
-                                    },
-                                    {
-                                        text: 'OK',
-                                        onPress: () =>{},
-                                    }
-                                ],
-                                { cancelable: false }
-                            )
-                        }
+                        onPress={() => handleReservation()}
                         title="Search Availability"
                         color="#5637DD"
                         accessibilityLabel="Tap me to search for available campsites to reserve"
                     />
                 </View>
-                {/* <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={showModal}
-                    onRequestClose={() => setShowModal(!showModal)}
-                >
-                    <View style={styles.modal}>
-                        <Text style={styles.modalTitle}>
-                            Search Campsite Reservations
-                        </Text>
-                        <Text style={styles.modalText}>
-                            Number of Campers: {campers}
-                        </Text>
-                        <Text style={styles.modalText}>
-                            Hike-In?: {hikeIn ? "Yes" : "No"}
-                        </Text>
-                        <Text style={styles.modalText}>
-                            Date: {date.toLocaleDateString("en-US")}
-                        </Text>
-                        <Button
-                            onPress={() => {
-                                setShowModal(!showModal);
-                                resetForm();
-                            }}
-                            color="#5637DD"
-                            title="Close"
-                        />
-                    </View>
-                </Modal> */}
             </Animatable.View>
         </ScrollView>
     );
@@ -164,22 +135,6 @@ const styles = StyleSheet.create({
     },
     formItem: {
         flex: 1,
-    },
-    modal: {
-        justifyContent: "center",
-        margin: 20,
-    },
-    modalTitle: {
-        fontSize: 24,
-        fontWeight: "bold",
-        backgroundColor: "#5637DD",
-        textAlign: "center",
-        color: "#fff",
-        marginBottom: 20,
-    },
-    modalText: {
-        fontSize: 18,
-        margin: 10,
     },
 });
 
